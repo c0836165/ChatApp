@@ -15,7 +15,7 @@ export default function App() {
     const [taskRate , settaskRate] = useState("");  
     const [taskStartDate, settaskStartDate] = useState('');
     const [taskEndDate, settaskEndDate] = useState('');
-    const [taskStatus , setTaskStatus] = useState("running");
+    const [taskStatus , setTaskStatus] = useState(" ");
     const [totalHours , settotalHours] = useState("");
     const[totalAmount, settotalAmount] = useState("");
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -33,7 +33,9 @@ export default function App() {
     const [assignProjectId, setAssignProjectId] = useState({
       name: "Select a Project for the Task",
     });
-1
+
+
+      
 
     // function for the all project data from the database 
 
@@ -52,6 +54,9 @@ export default function App() {
               
           })
           }
+
+
+        
 
 
     // function for the all user list from the database 
@@ -86,12 +91,38 @@ export default function App() {
               };
 
               const handleConfirm = (date) => {
+                
                 settaskStartDate(date.toString());
                 hideDatePicker();
               };
 
               const getDate = () => {
-                return taskStartDate.toString();
+
+                var c = taskStartDate.toString();
+
+                var mnths = {
+                  Jan: "01",
+                  Feb: "02",
+                  Mar: "03",
+                  Apr: "04",
+                  May: "05",
+                  Jun: "06",
+                  Jul: "07",
+                  Aug: "08",
+                  Sep: "09",
+                  Oct: "10",
+                  Nov: "11",
+                  Dec: "12"
+                },
+
+                date = c.split(" ");
+
+              var startDate =[date[3], mnths[date[1]], date[2]].join("-");
+              
+              return startDate.toString();
+
+              
+                
               };
 
               // date end 
@@ -108,16 +139,39 @@ export default function App() {
                 hideDateEndPicker();
               };
 
+             
+
               const getEndDate = () => {
-                return taskEndDate.toString();
-              };
+
+                var c = taskEndDate.toString();
+
+                var mnths = {
+                  Jan: "01",
+                  Feb: "02",
+                  Mar: "03",
+                  Apr: "04",
+                  May: "05",
+                  Jun: "06",
+                  Jul: "07",
+                  Aug: "08",
+                  Sep: "09",
+                  Oct: "10",
+                  Nov: "11",
+                  Dec: "12"
+                },
+
+                date = c.split(" ");
+            
+              var endDate =[date[3], mnths[date[1]], date[2]].join("-");
+              return endDate.toString(); 
+      };
 
       // function for the star date and end date end here 
 
       // function to to submit all data in the firebase 
 
       const handleSubmitTask = () => {
-
+        
         if (!taskName.trim() || !taskDescription.trim()) {
           alert("Please!!.. Enter Valid Inputs");
         }else {
@@ -139,21 +193,23 @@ export default function App() {
 
             }).then(() => {
                 // Data saved successfully!
-                alert(' Task Details added to database!'); 
-                
+                alert(' Task Details added to database!');
                 setTaskName('');
                 settaskDescription('');
-                
                 settaskRate('');
                 settaskStartDate('');
-                settaskEndDate('');   
+                settaskEndDate('');
+
+
             })  
             .catch((error) => {
                     // The write failed...
                     alert(error);
                 });
-            }
+          }
+
         }
+        
 
 
        

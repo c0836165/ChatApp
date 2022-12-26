@@ -2,6 +2,7 @@ import { StyleSheet, Text,Image, View, SafeAreaView, FlatList, TouchableOpacity 
 import React , {useState , useEffect} from 'react';
 import { getDatabase, push, ref, set , onValue, update } from 'firebase/database';
 import { getAuth } from "firebase/auth";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function UpdateTask({route}) {
 
@@ -17,6 +18,13 @@ export default function UpdateTask({route}) {
     const [taskStatus , setTaskStatus] = useState(details.taskStatus);
     const [totalHours , settotalHours] = useState(details.totalHours);
     const[totalAmount, settotalAmount] = useState('');
+    const focus = useIsFocused(); 
+    
+    useEffect(() => {
+      if(focus == true){
+        statusInfo();
+      }
+  }, [focus]);
   
 // function to callculate total payment
 
@@ -30,10 +38,75 @@ const TotalPayment = () =>{
 
 }
 
-function pid(){
+const statusInfo = () =>{
 
-   console.log(id);
+  var c = taskEndDate.toString();
+  var b = taskStartDate.toString();
+  var d = new Date().toLocaleDateString();
+
+                var mnths = {
+                  Jan: "01",
+                  Feb: "02",
+                  Mar: "03",
+                  Apr: "04",
+                  May: "05",
+                  Jun: "06",
+                  Jul: "07",
+                  Aug: "08",
+                  Sep: "09",
+                  Oct: "10",
+                  Nov: "11",
+                  Dec: "12"
+                };
+
+                var s = c.split(" ");
+                var t = b.split(" ");
+
+            
+              var p1 =[mnths[s[1]], s[2],s[3]].join("/");
+              var p2 = [mnths[t[1]], t[2],t[3]].join("/");
+
+              settaskStartDate(p2);
+              settaskEndDate(p1);
+
+
+  var parts1 = p1.split('/');
+  var parts2 = d.split('/');
+
+  
+   if(taskStatus == "complete") {
+      setTaskStatus(taskStatus);
+   } else {           
+    if (parseInt(parts1[2]) > parseInt(parts2[2])) {
+      
+      setTaskStatus("running");
+  } else if (parseInt(parts1[2]) == parseInt(parts2[2])) {
+      if (parseInt(parts1[1]) > parseInt(parts2[1])) {
+        
+          setTaskStatus("running");
+      } else if (parseInt(parts1[1]) == parseInt(parts2[1])) {
+          if (parseInt(parts1[0]) >= parseInt(parts2[0])) {
+              
+              setTaskStatus("running");
+          }else{
+           
+            setTaskStatus(" running late");
+          } 
+      }else{
+       
+        setTaskStatus("running late");
+      }
+}else {
+  
+  setTaskStatus("running late");
 }
+
+
+  
+ 
+  }
+}
+1
 
 const handleUpdateTask = () =>{
     
@@ -99,7 +172,7 @@ const handleUpdateTask = () =>{
                         />
                    
                     <View>
-                        <Pressable onPress={()=> handleUpdateTask()}>
+                        <Pressable onPress={()=> statusInfo()}>
                             <Text style={styles.submit}>UPDATE TASK</Text>
                         </Pressable>
                     </View>

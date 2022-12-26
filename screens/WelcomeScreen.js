@@ -20,11 +20,12 @@ export default function  WelcomeScreen({navigation}) {
     if(focus == true){
    ProjectDetail();
    changeImage();
+   SubProjectDetail();
     }
 }, [focus]);
 
   
-  
+  const [subTaskData , setSubTaskData] = useState();
 
   const ProjectDetail = () =>{
     var t = [];
@@ -39,8 +40,30 @@ export default function  WelcomeScreen({navigation}) {
     setData(t);
     console.log(data);
     
+    
 })
 }
+
+const SubProjectDetail = () =>{
+  var t = [];
+const db = getDatabase();
+const reference = ref(db, "subprojects/");
+onValue(reference, (snapshot) => {
+  snapshot.forEach(function (childSnapshot){
+    const ProjectData = childSnapshot.val();
+    t.push(ProjectData);
+      
+  });
+  setSubTaskData(t);
+  
+  
+  
+})
+}
+
+// function to show that how much percentages of tasks are completed
+
+
 
 const images= [Image2,Image3,Image4,Image5,];
 
