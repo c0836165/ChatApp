@@ -101,10 +101,25 @@ const statusInfo = () =>{
   setTaskStatus("running late");
 }
 
+const db = getDatabase();
 
+update(ref(db, 'subprojects/' + id), {
   
- 
-  }
+            pId:id,         
+            taskStatus:taskStatus,
+            
+
+
+        }).then(() => {
+            // Data saved successfully!
+            console.log(" Status Data Updated in Database."); 
+              
+        })  
+        .catch((error) => {
+                // The write failed...
+                alert(error);
+            });
+      }
 }
 1
 
@@ -172,7 +187,7 @@ const handleUpdateTask = () =>{
                         />
                    
                     <View>
-                        <Pressable onPress={()=> statusInfo()}>
+                        <Pressable onPress={()=> handleUpdateTask()}>
                             <Text style={styles.submit}>UPDATE TASK</Text>
                         </Pressable>
                     </View>

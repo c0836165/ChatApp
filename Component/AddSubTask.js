@@ -215,8 +215,14 @@ export default function App() {
        
 
   return (
-    <View style={{ alignItems: 'center', justifyContent: 'center' , marginTop:100 }}>
-             <TouchableOpacity
+
+   
+    <View style={{ alignItems: 'center', justifyContent: 'center' , marginTop:50 }}>
+
+      <View>
+      <Text style={styles.label}>PROJECT NAME</Text>
+
+      <TouchableOpacity
           style={{ justifyContent: "center" }}
           onPress={() => {
             setIsProjectOpen(true);
@@ -250,12 +256,22 @@ export default function App() {
           </View>
         )}
 
+      </View>
+           
+          
+            <View>
+            <Text style={styles.label}>TASK NAME</Text>
             <TextInput
             style={styles.textBoxes}
             placeholder=" Task Name.... "
             value={taskName}
             onChangeText={ (v) => setTaskName(v)}
             />
+
+            </View>
+
+            <View>
+            <Text style={styles.label}>TASK DESCRIPTION</Text>
             <TextInput
             style={styles.textBoxes}
             placeholder="Task Description...."
@@ -263,7 +279,12 @@ export default function App() {
             onChangeText={ (v) => settaskDescription(v)}
             />
 
-<TouchableOpacity
+            </View>
+
+      <View>
+      <Text style={styles.label}>ASSIGN TASK TO USER</Text>
+
+      <TouchableOpacity
           style={{ justifyContent: "center" }}
           onPress={() => {
             setIsUserOpen(true);
@@ -296,13 +317,29 @@ export default function App() {
           </View>
         )}
 
-<TextInput
+      </View>
+            
+      <View>
+            <Text style={styles.label}>TASK RATE</Text>
+            <TextInput
             style={styles.textBoxes}
             placeholder=" Add Hourly Rate...."
             value={taskRate}
             onChangeText={ (v) => settaskRate(v)}
             />
+
+      </View>      
+
+
+    <View style={styles.dateBoxmain}  >
+
+    <Text style={styles.label1}>PICK START & END DATE</Text>
+    
+
     <View style={styles.dateBox} >
+
+   
+
         <Pressable  onPress={showDatePicker}>
               <Text style={styles.DateTextshow} >Start Date</Text>
         </Pressable>
@@ -321,7 +358,7 @@ export default function App() {
           > {getDate()}</Text>
           </View>
 
-        <View style={styles.dateBox1} >
+        <View style={styles.dateBox} >
         <Pressable  onPress={showDateEndPicker}>
               <Text style={styles.DateTextshow} >End Date</Text>
         </Pressable>
@@ -338,6 +375,11 @@ export default function App() {
             style={styles.DateTextInput}
           >{getEndDate()}</Text>
          </View>
+
+
+    </View>
+            
+    
 
          <View>
 
@@ -360,6 +402,18 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+
+    label:{
+      padding:5,
+      marginLeft:10,
+      fontWeight:'bold',
+    },
+    label1:{
+      
+      marginLeft:110,
+      fontWeight:'bold',
+      marginBottom:5,
+    },
     container: {  
     flex: 1,
     backgroundColor: '#fff',
@@ -416,21 +470,26 @@ const styles = StyleSheet.create({
     },
     
     dateBox:{
-      width:'75%',
-      backgroundColor:'yellow',
-      flex:1,
+      width:'100%',
+      
       flexDirection:'row-reverse',
+      marginLeft:90,
+      marginBottom:10,
+      
       
 
     },
-    dateBox1:{
-      width:'75%',
-      backgroundColor:'yellow',
-      flex:1,
-      flexDirection:'row-reverse',
-      marginTop:60,
 
+    dateBoxmain:{
+      
+      
+      
+      padding:10,
+      
+      
+      
     },
+   
     DateTextInput:{
         width:200,
         height:50,
@@ -440,6 +499,7 @@ const styles = StyleSheet.create({
         padding: 12,
         borderColor: 'gray',
         marginLeft:100,
+       
       },
       DateTextshow:{
         width:100,
@@ -454,7 +514,7 @@ const styles = StyleSheet.create({
         fontWeight:'500',
       },
       submit:{
-        marginTop:60,
+        
         borderRadius:10,
         borderWidth:0.5,
         height:40,
