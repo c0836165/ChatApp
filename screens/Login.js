@@ -1,9 +1,9 @@
-import { StyleSheet, Text, TextInput, View , Button, Image, SafeAreaView} from 'react-native';
+import { StyleSheet,TextInput, View , Button, Image} from 'react-native';
 
 import React, { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set , onValue } from 'firebase/database';
+import { getDatabase, ref, set} from 'firebase/database';
 
 
 

@@ -1,6 +1,6 @@
 import { useState , useEffect } from "react";
-import { StyleSheet, Text,Image, View, SafeAreaView, FlatList,TouchableOpacity, StatusBar, ScrollView } from "react-native";
-import { getDatabase, push, ref, set , onValue } from 'firebase/database';
+import { StyleSheet, Text,Image, View, SafeAreaView, FlatList,TouchableOpacity} from "react-native";
+import { getDatabase,ref,onValue } from 'firebase/database';
 import { getAuth } from "firebase/auth";
 import { useIsFocused } from "@react-navigation/native"; 
 
@@ -16,9 +16,7 @@ function UserScreen({ navigation }) {
   }, [focus]);
 
   
-  function openDrawerHandler() {
-    navigation.toggleDrawer();
-  }
+ 
 
   const itemSeparator = () => {
     return <View style = {styles.separator} />

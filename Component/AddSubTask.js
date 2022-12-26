@@ -1,8 +1,8 @@
-import { useState , useEffect} from 'react';
-import { StyleSheet, Text, TextInput, FlatList, View,VariantsBox, TouchableOpacity , Button, Pressable, SafeAreaView  } from 'react-native';
+import { useState} from 'react';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Pressable  } from 'react-native';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import { getDatabase, push, ref, set , onValue } from 'firebase/database';
-import { getAuth } from "firebase/auth";
+import { getDatabase, ref, set , onValue } from 'firebase/database';
+
 
 
 export default function App() {

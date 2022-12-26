@@ -1,7 +1,6 @@
-import { StyleSheet, Text,Image, View, SafeAreaView, FlatList, TouchableOpacity , Pressable ,TextInput, ScrollView} from "react-native";
+import { StyleSheet, Text,View, Pressable ,TextInput, ScrollView} from "react-native";
 import React , {useState , useEffect} from 'react';
-import { getDatabase, push, ref, set , onValue, update } from 'firebase/database';
-import { getAuth } from "firebase/auth";
+import { getDatabase,ref,update } from 'firebase/database';
 import { useIsFocused } from "@react-navigation/native";
 
 export default function UpdateTask({route}) {
@@ -172,19 +171,48 @@ const handleUpdateTask = () =>{
     <ScrollView>
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <View style={styles.item}>
+
+          <View>
+          <Text style={styles.label}>TASK NAME</Text>
+          <Text style={styles.textBoxes} >{taskName}</Text>
+          </View>
+          <View>
+          <Text style={styles.label}>TASK DESCRIPTION</Text>
+          <Text style={styles.textBoxes} >{taskDescription}</Text>
+          </View>
+          <View>
+          <Text style={styles.label}>TASK ASSIGN TO</Text>
+          <Text style={styles.textBoxes} >{assignedMember}</Text>
+          </View>
+          <View>
+          <Text style={styles.label}>TASK START DATE</Text>
+          <Text style={styles.textBoxes} >{taskStartDate}</Text>
+          </View>
+          <View>
+          <Text style={styles.label}>TASK END DATE</Text>
+          <Text style={styles.textBoxes} >{taskEndDate}</Text>
+          </View>
+          <View>
+          <Text style={styles.label}>TASK STATUS</Text>
+          <TextInput placeholder="Task Status?" style={styles.textBoxes} value = {taskStatus} onChangeText={(v) => setTaskStatus(v)}/> 
+          </View>
+          <View>
+          <Text style={styles.label}>TOTAL TASK HOURS</Text>
+          <TextInput
+              style={styles.textBoxes}
+              placeholder="Hours You Worked On"
+              value={totalHours}
+              onChangeText={ (v) => settotalHours(v)}
+          />
+          </View>
+
+
         
-                    <Text style={styles.textBoxes} >{taskName}</Text>
-                    <Text style={styles.textBoxes} >{taskDescription}</Text>
-                    <Text style={styles.textBoxes} >{assignedMember}</Text>
-                    <Text style={styles.textBoxes} >Start Date :{taskStartDate}</Text>
-                    <Text style={styles.textBoxes} >End Date :{taskEndDate}</Text>
-                    <TextInput placeholder="Task Status?" style={styles.textBoxes} value = {taskStatus} onChangeText={(v) => setTaskStatus(v)}/> 
-                    <TextInput
-                        style={styles.textBoxes}
-                        placeholder="Hours You Worked On"
-                        value={totalHours}
-                        onChangeText={ (v) => settotalHours(v)}
-                        />
+                    
+                    
+                    
+                    
+                    
                    
                     <View>
                         <Pressable onPress={()=> handleUpdateTask()}>
@@ -201,6 +229,12 @@ const handleUpdateTask = () =>{
 }
 
 const styles = StyleSheet.create({
+
+    label:{
+      
+      marginLeft:10,
+      fontWeight:'bold',
+    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
@@ -245,14 +279,14 @@ const styles = StyleSheet.create({
     width: 300, 
     fontSize: 20,
     padding: 12,
-    fontWeight:'700',
+    fontWeight:'300',
     borderColor: 'gray', 
     borderWidth: 0.2,
     borderRadius: 10,
     marginBottom:10,
     marginLeft:10,
     textAlign:'center',
-    marginTop:10,
+    marginTop:5,
     
     },
    

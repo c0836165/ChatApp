@@ -1,4 +1,4 @@
-import { Alert, Button, StyleSheet, Text, View } from 'react-native'
+import {  Button} from 'react-native'
 // import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React, { useState , useEffect } from 'react';
@@ -13,7 +13,7 @@ import AddSubTask from '../Component/AddSubTask';
 
 const Drawer = createDrawerNavigator();
 
-export default function adminHome({route , navigation}) {
+export default function adminHome({ navigation}) {
 
 
   const [isAdmin , setIsAdmin] = useState(true);

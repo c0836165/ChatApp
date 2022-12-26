@@ -1,8 +1,7 @@
-import { SafeAreaView, View, TextInput,Text, StyleSheet, Button, Alert} from "react-native";
-import React , {useState, useEffect} from 'react';
-import { getDatabase, push, ref, set , onValue } from 'firebase/database';
+import { SafeAreaView, View, TextInput,Text, StyleSheet, Button} from "react-native";
+import React , {useState} from 'react';
+import { getDatabase, push, ref, onValue } from 'firebase/database';
 import { getAuth } from "firebase/auth";
-
 export default function AddProject() {
 
     const [projectName , setProjectName] = useState("");
@@ -29,23 +28,6 @@ export default function AddProject() {
             });
         }
     }
-               
-           
-const CheckProjectDetail = () =>{
-    var t = [];
-  const db = getDatabase();
-  const reference = ref(db, "projects/");
-  onValue(reference, (snapshot) => {
-    snapshot.forEach(function (childSnapshot){
-      const ProjectData = childSnapshot.val();
-      t.push(ProjectData.name);
-        
-    });
-    setpData(t);
-    console.log(PData);
-    
-})
-}
 
      return( 
         <SafeAreaView>
@@ -60,8 +42,7 @@ const CheckProjectDetail = () =>{
             />
             <Button style = {styles.submit} title= "Add" onPress={()=> saveProjectToServer()}>
             </Button>
-            <Button style = {styles.submit} title= "Data" onPress={()=> CheckProjectDetail()}>
-            </Button>
+            
             </View>
             </View>
             </SafeAreaView>

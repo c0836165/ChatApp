@@ -1,14 +1,13 @@
 
 import { useState , useEffect } from "react";
-import { StyleSheet, Text,Image, View, SafeAreaView, FlatList, TouchableOpacity } from "react-native";
-import { getDatabase, push, ref, set , onValue } from 'firebase/database';
-import { getAuth } from "firebase/auth";
+import { StyleSheet, Text,Image, View, SafeAreaView, FlatList, TouchableOpacity, Pressable } from "react-native";
+import { getDatabase,ref, onValue } from 'firebase/database';
 import { useIsFocused } from "@react-navigation/native"; 
-
 import Image2 from '../assets/project.jpeg';
 import Image3 from '../assets/project1.png';
 import Image4 from '../assets/project3.jpeg';
 import Image5 from '../assets/project3.png';
+
 
 
 
@@ -19,7 +18,7 @@ export default function  WelcomeScreen({navigation}) {
   useEffect(() => {
     if(focus == true){
    ProjectDetail();
-   changeImage();
+  
    SubProjectDetail();
     }
 }, [focus]);
@@ -38,7 +37,7 @@ export default function  WelcomeScreen({navigation}) {
         
     });
     setData(t);
-    console.log(data);
+   
     
     
 })
@@ -65,18 +64,9 @@ onValue(reference, (snapshot) => {
 
 
 
-const images= [Image2,Image3,Image4,Image5,];
+const [images ,setImage]= useState([Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5]);
 
-  const [currentImageIndex, setCurrentImageIndex] = useState('')
- 
-  const changeImage = () => {
-    for(var i =0 ; i<images.length;i++){
-    const randomNumber = Math.floor(Math.random() * images.length) ;
-    setCurrentImageIndex(randomNumber);
-    }
-  }
-  
-  
+
   
 const itemSeparator = () => {
   return <View style = {styles.separator} />
@@ -94,6 +84,7 @@ return (
               ItemSeparatorComponent = { itemSeparator }
 
               renderItem = { ( {item , index} ) => (
+              
                   <TouchableOpacity onPress= {()=>navigation.navigate("SubTaskDetails" , {info:JSON.stringify(item.name)})} >
                   
                     
@@ -105,12 +96,19 @@ return (
                             <Image style={styles.imagestyle} source={images[index]} />
                           </View>
                           <Text style={styles.itemname}>{item.name}</Text>
+                          <Pressable onPress={()=>imageselector()}>
+                            
+                          </Pressable>
+                         
+                         
                       </View>
                   
                   </TouchableOpacity>
               )}
                 
               />
+
+            
               
 
             

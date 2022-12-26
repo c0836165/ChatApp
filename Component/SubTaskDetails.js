@@ -1,7 +1,6 @@
 import { StyleSheet, Text,Image, View, SafeAreaView,TextInput, FlatList, TouchableOpacity } from "react-native";
 import React , {useState , useEffect} from 'react';
-import { getDatabase, push, ref, set , onValue } from 'firebase/database';
-import { getAuth } from "firebase/auth";
+import { getDatabase,ref,onValue } from 'firebase/database';
 import { useIsFocused } from "@react-navigation/native";
 import Image2 from '../assets/project.jpeg';
 import Image3 from '../assets/project1.png';
@@ -13,7 +12,7 @@ export default function SubTaskDetails({route , navigation}) {
     const [query, setQuery] = useState("");
     const [products, setProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
-    const [isComplete , setIsComplete] = useState(false);
+  
 
     const name = JSON.parse(route.params.info);
     
@@ -22,16 +21,12 @@ export default function SubTaskDetails({route , navigation}) {
     useEffect(() => {
       if(focus == true){
         SubTaskData();
-        changeImage();
+        
       }
   }, [focus]);
 
-  const images= [Image2,Image3,Image4,Image5,];
-  const [currentImageIndex, setCurrentImageIndex] = useState('')
-  const changeImage = () => {
-    const randomNumber = Math.floor(Math.random() * images.length) ;
-    setCurrentImageIndex(randomNumber);
-    }
+  const images= [Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5];
+
   
   
 

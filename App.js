@@ -37,7 +37,7 @@ export default function MyStack() {
                         
                         options={{
                           headerShown: true,
-                          title: 'Update Task',
+                          title: 'Task Details',
                           headerStyle: {
                             backgroundColor: '#73B9EE',
                           },
