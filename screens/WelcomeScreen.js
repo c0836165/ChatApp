@@ -40,7 +40,7 @@ export default function  WelcomeScreen({navigation}) {
     });
     setData(t);
     setAllProducts(t);
-    console.log(data);
+    
     
     
 })

@@ -1,4 +1,4 @@
-import { StyleSheet,TextInput, View , Button, Image, Pressable ,TouchableHighlight, Text} from 'react-native';
+import { StyleSheet,TextInput, View , Button, Image, Pressable ,TouchableHighlight, Text, SafeAreaView, ScrollView} from 'react-native';
 
 import React, { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -26,7 +26,7 @@ export default function Login({navigation}) {
     initializeApp(firebaseConfig);
     const unsubscribe = getAuth().onAuthStateChanged(user => {
       if (user) {
-        navigation.navigate("AdminHome" , {data1:email});
+        navigation.navigate("Home" , {data1:email});
 
       }
     })
@@ -67,9 +67,13 @@ export default function Login({navigation}) {
  
     return (
       
+      
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor : "#FAF9F9" }} >
            
-            <View >
+       
+        <View>
+
+       
 
             <View style={styles.avatarContainer} >
                             <Image style={styles.imagestyle} source = {require('../assets/loginImg.gif')} />
@@ -108,9 +112,16 @@ export default function Login({navigation}) {
 
           
           </View>
+
+         
     
         </View>
+
+       
+        
     </View>
+
+  
     
     ); 
                         

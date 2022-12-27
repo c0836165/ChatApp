@@ -14,7 +14,7 @@ import CompleteProject from '../Component/CompleteProject';
 
 const Drawer = createDrawerNavigator();
 
-export default function adminHome({ navigation}) {
+export default function AdminHome({ navigation}) {
 
 
   const [isAdmin , setIsAdmin] = useState(true);
