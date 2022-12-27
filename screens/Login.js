@@ -1,4 +1,4 @@
-import { StyleSheet,TextInput, View , Button, Image} from 'react-native';
+import { StyleSheet,TextInput, View , Button, Image, Pressable ,TouchableHighlight, Text} from 'react-native';
 
 import React, { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -33,26 +33,7 @@ export default function Login({navigation}) {
     return unsubscribe;
   }, []);
   
-// const CheckUserType = (email) =>{
-//   const db = getDatabase();
-//   const reference = ref(db, "users/");
-//   onValue(reference, (snapshot) => {
-//     snapshot.forEach(function (childSnapshot) {
-//       const userData = childSnapshot.val();
-//       if (userData.email === email) {
-//         if (userData.userType === "admin") {
-//          // navigate to admin home 
-//          console.log("admin login ")
-//          navigation.navigate("Home");
-//         } else {
-//           // navigate to user Home 
-//           navigation.navigate("userHome");
-//           console.log("user login ")
-//         }
-//       }
-//     });
-//   });
-// }
+
 
 
   const handleSignUp = () => {
@@ -109,20 +90,26 @@ export default function Login({navigation}) {
             onChangeText={ (v) => setPassWord(v)}
             />
         
-            <Button
- 
-            title="Login"
+            
+          <TouchableHighlight
+            style={styles.submit}
             onPress={() => handleLogin()}
-          />
+            underlayColor='#fff'>
+              <Text style={styles.submitText}>LOGIN</Text>
+          </TouchableHighlight>
 
-          <Button
- 
-            title="SignUp"
-            onPress={() => handleSignUp()}
-          />
+          <View style={styles.signupMain}>
+              <Text>New User?</Text>
+              <Pressable onPress={() => handleSignUp()}>
+                <Text style={styles.signup} >SIGNUP</Text>
+              </Pressable>
+
+          </View>
+
+          
           </View>
     
-            </View>
+        </View>
     </View>
     
     ); 
@@ -150,16 +137,38 @@ export default function Login({navigation}) {
           fontWeight:'bold',
           margin:10,
           textAlign:'center',
-         
-          
-          
-    
         },
+        
         imagestyle:{
           width:'100%',
           height:'50%',
           marginTop:50,
-
+        },
+        signupMain:{
+          flexDirection:'row',
+          margin:14,
           
+        },
+        signup:{
+          color:'blue',
+          marginLeft:2,
+
+        },
+        submit: {
+          
+          marginRight: 40,
+          marginLeft: 40,
+          paddingTop: 15,
+          paddingBottom: 10,
+          backgroundColor: '#68a0cf',
+          borderRadius: 10,
+          borderWidth: 1,
+          borderColor: '#fff',
+          height:50,
+        },
+        submitText: {
+          color: '#fff',
+          textAlign: 'center',
+         
         },
         });

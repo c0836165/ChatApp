@@ -7,25 +7,24 @@ export default function CompleteProject() {
 
     // project data
     const [data , setData] = useState();
-
-    // subtask data 
-    
-
-    const [count , setCount] = useState(); 
-
-    // project with task status 
+    const [query, setQuery] = useState("");
+    const [products, setProducts] = useState([]);
     const [allProducts, setAllProducts] = useState([]);
 
+    // subtask data 
+    const [count , setCount] = useState(); 
     const focus = useIsFocused(); 
+
     
     useEffect(() => {
       if(focus == true){
         SubTaskData();
         ProjectDetail();
-       
-        
       }
   }, [focus]);
+
+
+  
 
 
     const ProjectDetail = () =>{
@@ -63,12 +62,25 @@ export default function CompleteProject() {
             return mp;
         }, new Map).values()];
         
-       
-        setCount(result);
+      setProducts(result);
+      setAllProducts(result);
+      console.log(allProducts);
         
       
        
      })
+    }
+
+
+    const onSearchTextChanged = (text) => {
+      const temp = [];
+      setQuery(text);
+      allProducts.forEach(function (childSnapshot) {
+        if (childSnapshot.taskStatus.toLowerCase().includes(text.toLowerCase()) || childSnapshot.count.toString().includes(text) ||childSnapshot.projectName.toLowerCase().includes(text.toLowerCase())) {
+          temp.push(childSnapshot);
+        }
+      });
+      setProducts(temp);
     }
 
 
@@ -79,29 +91,45 @@ export default function CompleteProject() {
     
 
   return (
-    <FlatList
-            data = {count}
+
+    <View>
+
+    <View style={{ alignItems: 'center', justifyContent: 'center' , marginTop:10 }}>
+        <TextInput
+            style={styles.textBoxes}
+            placeholder=" Search here... "
+            value={query}
+            onChangeText={text => onSearchTextChanged(text)}
+            />
+
+    </View>        
+
+
+            <View>
+
+            <FlatList
+            data = {products}
          
 
             renderItem = { ( {item , index} ) => (
-                <TouchableOpacity >
                 
+            <TouchableOpacity >
                 
-
+                <View style={styles.item}>
+                            
+                  <Text style={styles.itemname}>{item.projectName}:</Text>
+                  <Text style={styles.itemname}>Task Status: {item.taskStatus}</Text>
+                  <Text style={styles.itemname}>Count: {item.count}</Text>
+                            
+                </View>
                 
-
-                    <View style={styles.item}>
-                        
-                        <Text style={styles.itemname}>{item.projectName}:</Text>
-                        <Text style={styles.itemname}>Task Status: {item.taskStatus}</Text>
-                        <Text style={styles.itemname}>Count: {item.count}</Text>
-                        
-                    </View>
-                
-                </TouchableOpacity>
+            </TouchableOpacity>
             )}
             
             />
+              
+            </View> 
+    </View>
   )
 }
 
@@ -194,9 +222,7 @@ const styles = StyleSheet.create({
           borderWidth: 0.5,
           borderRadius: 10,
           marginBottom:10,
-          
-          
-          },
+        },
     
     });
     

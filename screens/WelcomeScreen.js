@@ -1,6 +1,6 @@
 
 import { useState , useEffect } from "react";
-import { StyleSheet, Text,Image, View, SafeAreaView, FlatList, TouchableOpacity, Pressable } from "react-native";
+import { StyleSheet, Text,TextInput,Image, View, SafeAreaView, FlatList, TouchableOpacity, Pressable } from "react-native";
 import { getDatabase,ref, onValue } from 'firebase/database';
 import { useIsFocused } from "@react-navigation/native"; 
 import Image2 from '../assets/project.jpeg';
@@ -14,6 +14,8 @@ import Image5 from '../assets/project3.png';
 export default function  WelcomeScreen({navigation}) {
 
   const [data , setData] = useState();
+  const [query, setQuery] = useState("");
+  const [allProducts, setAllProducts] = useState([]);
   const focus = useIsFocused(); 
   useEffect(() => {
     if(focus == true){
@@ -37,7 +39,8 @@ export default function  WelcomeScreen({navigation}) {
         
     });
     setData(t);
-   
+    setAllProducts(t);
+    console.log(data);
     
     
 })
@@ -60,26 +63,41 @@ onValue(reference, (snapshot) => {
 })
 }
 
+const onSearchTextChanged = (text) => {
+  const temp = [];
+  setQuery(text);
+  allProducts.forEach(function (childSnapshot) {
+    if (childSnapshot.name.toLowerCase().includes(text.toLowerCase())) {
+      temp.push(childSnapshot);
+    }
+  });
+  setData(temp);
+}
+
 // function to show that how much percentages of tasks are completed
-
-
-
 const [images ,setImage]= useState([Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5]);
 
-
-  
 const itemSeparator = () => {
   return <View style = {styles.separator} />
  }
-
-
-
 
 return (
        
   <SafeAreaView>
 
-          <FlatList
+    <View>
+
+    <View style={{ alignItems: 'center', justifyContent: 'center' , marginTop:10 }}>
+        <TextInput
+            style={styles.textBoxes}
+            placeholder=" Search here... "
+            value={query}
+            onChangeText={text => onSearchTextChanged(text)}
+            />
+
+    </View>     
+
+    <FlatList
               data = {data}
               ItemSeparatorComponent = { itemSeparator }
 
@@ -87,11 +105,7 @@ return (
               
                   <TouchableOpacity onPress= {()=>navigation.navigate("SubTaskDetails" , {info:JSON.stringify(item.name)})} >
                   
-                    
-
-                  
-
-                      <View style={styles.item}>
+                  <View style={styles.item}>
                           <View style={styles.avatarContainer} >
                             <Image style={styles.imagestyle} source={images[index]} />
                           </View>
@@ -99,14 +113,17 @@ return (
                           <Pressable onPress={()=>imageselector()}>
                             
                           </Pressable>
-                         
-                         
-                      </View>
+                  </View>
                   
                   </TouchableOpacity>
               )}
                 
               />
+
+
+    </View>
+
+          
 
             
               
@@ -200,6 +217,15 @@ const styles = StyleSheet.create({
     width:50,
     height:50,
     borderRadius: 100,
+  },
+  textBoxes: {
+    width: 350, 
+    fontSize: 18,
+    padding: 12,
+    borderColor: 'gray', 
+    borderWidth: 0.5,
+    borderRadius: 10,
+    marginBottom:10,
   },
 
 });

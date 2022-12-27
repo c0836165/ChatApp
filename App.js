@@ -4,10 +4,13 @@ import Login from './screens/Login';
 import AdminHome from './screens/AdminHome';
 import SubTaskDetails from './Component/SubTaskDetails';
 import UpdateTask from './Component/UpdateTask';
+import { LogBox } from 'react-native';
 
 const Stack = createStackNavigator();
 
 export default function MyStack() {
+
+  LogBox.ignoreLogs(["Got a component with the name 'adminHome' for the screen 'AdminHome'. React Components must start with an uppercase letter. If you're passing a regular function and not a component, pass it as children to 'Screen' instead. Otherwise capitalize your component's name."]);
   return (
     <NavigationContainer independent={true}>
     <Stack.Navigator
