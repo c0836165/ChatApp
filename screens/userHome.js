@@ -10,18 +10,21 @@ import Image5 from '../assets/project3.png';
 
 function UserScreen({ navigation }) {
   
-    const [taskArray , setTaskArray] = useState("");
+    const [taskArray , setTaskArray] = useState(" ");
+    const [isEmpty , setIsEmpty] = useState(false);
     const focus = useIsFocused(); 
     
     useEffect(() => {
       if(focus == true){
         SubTaskData();
+        
       }
   }, [focus]);
 
   const [images ,setImage]= useState([Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5]);
  
 
+  
   const itemSeparator = () => {
     return <View style = {styles.separator} />
    }
@@ -45,42 +48,60 @@ function UserScreen({ navigation }) {
                 
             });
             setTaskArray(t);
-            
-            
-            
-        }
+
+          if(t.length === 0){
+              setIsEmpty(true);
+          }
+  }
         
 
   return (
-    <SafeAreaView>
-        <FlatList
-              data = {taskArray}
-              ItemSeparatorComponent = { itemSeparator }
+    <>
+    {!isEmpty?(
+      <SafeAreaView>
+      <FlatList
+            data = {taskArray}
+            ItemSeparatorComponent = { itemSeparator }
 
-              renderItem = { ( {item , index} ) => (
-                  <TouchableOpacity onPress= {()=>navigation.navigate("UpdateTask" , {info:JSON.stringify(item)})} >
-                  
-                    
-
-                  
-
-                      <View style={styles.item}>
-                          <View style={styles.avatarContainer} >
-                            <Image style={styles.imagestyle} source={images[index]} />
-                          </View>
-                          <View>
-                          <Text style={styles.itemname}>{item.taskName}</Text>
-                          <Text style={styles.itemname1}>{item.projectName}</Text>
-                          </View>
-                          
-                      </View>
-                  
-                  </TouchableOpacity>
-              )}
+            renderItem = { ( {item , index} ) => (
+                <TouchableOpacity onPress= {()=>navigation.navigate("UpdateTask" , {info:JSON.stringify(item)})} >
                 
-              />
+                  
 
-              </SafeAreaView>
+                
+
+                    <View style={styles.item}>
+                        <View style={styles.avatarContainer} >
+                          <Image style={styles.imagestyle} source={images[index]} />
+                        </View>
+                        <View>
+                        <Text style={styles.itemname}>{item.taskName}</Text>
+                        <Text style={styles.itemname1}>{item.projectName}</Text>
+                        </View>
+                        
+                    </View>
+                
+                </TouchableOpacity>
+            )}
+              
+            />
+
+            </SafeAreaView>
+    ):(
+
+  
+      <View style={styles.container}>
+        <Text>NO TASK HAS BEEN ALLOCATED TO YOU BY ADMIN</Text>
+      </View>
+
+
+      
+        
+    
+
+    )}
+    </>
+    
   );
 }
 
