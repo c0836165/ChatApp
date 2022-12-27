@@ -9,6 +9,7 @@ import WelcomeScreen from "./WelcomeScreen";
 import UserHome from "./userHome";
 import AddProject from '../Component/AddProject';
 import AddSubTask from '../Component/AddSubTask';
+import CompleteProject from '../Component/CompleteProject';
 
 
 const Drawer = createDrawerNavigator();
@@ -112,6 +113,17 @@ export default function adminHome({ navigation}) {
             }}
       />
 
+      <Drawer.Screen
+            name="Project Status"
+            component={CompleteProject}
+            options={{
+              drawerIcon: ({ color, size }) => (
+                <AntDesign name="addfile" color={color} size={size} />
+               
+              ),
+            }}
+      />
+
 
 
     </Drawer.Navigator>
@@ -124,15 +136,15 @@ export default function adminHome({ navigation}) {
         // is not then only show one screen 
         <Drawer.Navigator
     
-            screenOptions={{
-              //header background color
-              headerStyle: { backgroundColor: "#3c0a6b" },
-              //header text color
-              headerTintColor: "white",
-              drawerActiveBackgroundColor: "#f0e1ff",
-              drawerActiveTintColor: "#3c0a6b",
-              drawerStyle: { backgroundColor: "#cccc" },
-            }}
+        screenOptions={{
+          //header background color
+          headerStyle: { backgroundColor: "#73B9EE" },
+          //header text color
+          headerTintColor: "white",
+          drawerActiveBackgroundColor: "#86CEFA",
+          drawerActiveTintColor: "#fff",
+          drawerStyle: { backgroundColor: "#cccc" },
+        }}
             
         >
 
@@ -141,7 +153,8 @@ export default function adminHome({ navigation}) {
             component={UserHome}
             options={{
               drawerIcon: ({ color, size }) => (
-                <Ionicons name="person" color={color} size={size} />
+                
+                <AntDesign name="profile" color={color} size={size} />
               ),
               headerRight: () => (
                 <Button

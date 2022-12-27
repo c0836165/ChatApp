@@ -2,7 +2,11 @@ import { useState , useEffect } from "react";
 import { StyleSheet, Text,Image, View, SafeAreaView, FlatList,TouchableOpacity} from "react-native";
 import { getDatabase,ref,onValue } from 'firebase/database';
 import { getAuth } from "firebase/auth";
-import { useIsFocused } from "@react-navigation/native"; 
+import { useIsFocused } from "@react-navigation/native";
+import Image2 from '../assets/project.jpeg';
+import Image3 from '../assets/project1.png';
+import Image4 from '../assets/project3.jpeg';
+import Image5 from '../assets/project3.png'; 
 
 function UserScreen({ navigation }) {
   
@@ -15,7 +19,7 @@ function UserScreen({ navigation }) {
       }
   }, [focus]);
 
-  
+  const [images ,setImage]= useState([Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5,Image2,Image3,Image4,Image5]);
  
 
   const itemSeparator = () => {
@@ -62,7 +66,7 @@ function UserScreen({ navigation }) {
 
                       <View style={styles.item}>
                           <View style={styles.avatarContainer} >
-                            <Image style={styles.imagestyle} source = {require('../assets/5956592.png')} />
+                            <Image style={styles.imagestyle} source={images[index]} />
                           </View>
                           <View>
                           <Text style={styles.itemname}>{item.taskName}</Text>
@@ -100,6 +104,8 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     alignItems: 'center',
     paddingVertical: 13,
+    
+
   },
   avatarContainer:{
     backgroundColor: '#D9D9D9',
@@ -163,9 +169,11 @@ itemname1:{
   },
 
   imagestyle:{
-    width:40,
-    height:40,
+    width:50,
+    height:50,
+    borderRadius: 100,
   },
+
 
 });
 
