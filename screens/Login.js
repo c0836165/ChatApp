@@ -13,13 +13,13 @@ export default function Login({navigation}) {
   const [password, setPassWord] = useState("");
 
   const firebaseConfig = {
-    apiKey: "AIzaSyAj_sSY0AITd_DySucu4KaxN702B6qMvM0",
-    authDomain: "taskmanagement-3829e.firebaseapp.com",
-    projectId: "taskmanagement-3829e",
-    storageBucket: "taskmanagement-3829e.appspot.com",
-    messagingSenderId: "289426438501",
-    appId: "1:289426438501:web:7d13ffcba814e1c1f2898c",
-    measurementId: "G-JPVXQFWV9T"
+  apiKey : "AIzaSyATyhqHua758po_fpAyjl9O0e-MBBxvIzs" , 
+  authDomain : "chatapp-7317e.firebaseapp.com" , 
+  projectId : "chatapp-7317e" , 
+  storageBucket : "chatapp-7317e.appspot.com" , 
+  messagingSenderId : "826776809164" , 
+  appId : "1:826776809164:web:82ddc06481f88e1f279c69" , 
+  measurementId : "G-QQNGKY126W" 
   };
 
   useEffect(() => {
