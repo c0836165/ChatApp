@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import {getAuth} from 'firebase/auth';
-
+import { getDatabase, ref,push, set, onValue } from 'firebase/database';
 export default function Chat({route}) {
     
   
@@ -35,10 +35,22 @@ export default function Chat({route}) {
         ])
       }, [])
     
+      const createdAt = Date.now();
       const onSend = useCallback((messageArray) => {
-        console.log(messageArray);
-        setMessages(previousMessages => GiftedChat.append(previousMessages, messageArray))
-    
+        const msg = messageArray[0];
+        const mymsg = {
+          ...msg,
+          sentBy:uID,
+          sentTo:userId,
+          createdAt: new Date()
+        }
+        setMessages(previousMessages => GiftedChat.append(previousMessages, mymsg))
+        const db = getDatabase();
+        const reference = ref(db, "chatrooms/" + userId+"-"+uID);
+          push(reference, { cId: userId+"-"+uID,createdAt: createdAt, mymsg:mymsg})
+            .then(() => alert("chat Added to database"))
+            .catch(error => { alert(error.message) })
+        
       }, [])
     
       return (
@@ -46,7 +58,7 @@ export default function Chat({route}) {
           messages={messages}
           onSend={messages => onSend(messages)}
           user={{
-            _id: getAuth().currentUser?.email,
+            _id: uID,
           }}
         />
       )

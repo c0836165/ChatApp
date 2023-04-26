@@ -10,7 +10,7 @@ const firebaseConfig = {
     storageBucket : "chatapp-2f052.appspot.com" , 
     messagingSenderId : "577348756597" , 
     appId : "1:577348756597:web:d79e42dca31993c83dc43c" , 
-    measurementId : "G-W3W7F7ZBTE" 
+    measurementId : "G-W3W7F7ZBTE"
 
 }
 
