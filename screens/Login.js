@@ -3,7 +3,7 @@ import { StyleSheet,TextInput, View , Button, Image, Pressable ,TouchableHighlig
 import React, { useEffect, useState } from "react";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set} from 'firebase/database';
+import DB from './firebase';
 
 
 
@@ -12,18 +12,9 @@ export default function Login({navigation}) {
   const [email, setEmail] = useState("");
   const [password, setPassWord] = useState("");
 
-  const firebaseConfig = {
-  apiKey : "AIzaSyATyhqHua758po_fpAyjl9O0e-MBBxvIzs" , 
-  authDomain : "chatapp-7317e.firebaseapp.com" , 
-  projectId : "chatapp-7317e" , 
-  storageBucket : "chatapp-7317e.appspot.com" , 
-  messagingSenderId : "826776809164" , 
-  appId : "1:826776809164:web:82ddc06481f88e1f279c69" , 
-  measurementId : "G-QQNGKY126W" 
-  };
-
+  
   useEffect(() => {
-    initializeApp(firebaseConfig);
+    
     const unsubscribe = getAuth().onAuthStateChanged(user => {
       if (user) {
         navigation.navigate("Home" , {data1:email});

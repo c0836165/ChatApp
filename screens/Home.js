@@ -1,187 +1,187 @@
-import {  Button , LogBox} from 'react-native'
-// import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import React, { useState , useEffect } from 'react';
-import { getAuth } from "firebase/auth";
-import { AntDesign } from '@expo/vector-icons'; 
-import { getDatabase, ref, onValue } from 'firebase/database';
-import WelcomeScreen from "./WelcomeScreen";
-import UserHome from "./userHome";
-import AddProject from '../Component/AddProject';
-import AddSubTask from '../Component/AddSubTask';
-import CompleteProject from '../Component/CompleteProject';
+import { useState ,useEffect } from "react";
+import { StyleSheet, Text,TextInput,Image, View, SafeAreaView, FlatList, TouchableOpacity, Pressable, Alert } from "react-native";
+import { getDatabase,ref, onValue } from 'firebase/database';
+import { useIsFocused } from "@react-navigation/native"; 
 
 
-const Drawer = createDrawerNavigator();
-
-export default function AdminHome({ navigation}) {
-
-
-  const [isAdmin , setIsAdmin] = useState(true);
-
-  useEffect(() => {
-    CheckUserType();
-  }, []);
+export default function Home({navigation}) {
   
+  
+  
+  const [data , setData] = useState();
 
-    const userEmail = getAuth().currentUser?.email;
-    const logout = () => {
-        getAuth().signOut().then(() => {
-            
-            
-        navigation.replace("Login");
-        }).catch(error => { alert(error.message) });
-      }
-
-      const CheckUserType = () =>{
-          const db = getDatabase();
-          const reference = ref(db, "users/");
-          onValue(reference, (snapshot) => {
-            snapshot.forEach(function (childSnapshot) {
-              const userData = childSnapshot.val();
-              
-              if (userData.email === userEmail) {
-                 if(userData.userType === 'admin'){
-                    setIsAdmin(true);
-                 }else{
-                  setIsAdmin(false);
-                 }
-              }
-              
-            });
-          });
-        }
-    
-  return (
-
-   <>
-      {isAdmin?(
-
-      // admin section start here....
-      //is admin then show two screen 
-      <Drawer.Navigator
+  const [allProducts, setAllProducts] = useState([]);
+  
+  const focus = useIsFocused(); 
+  useEffect(() => {
+    if(focus == true){
+   ProjectDetail();
+  
+   
+    }
+}, [focus]);
+  
+  const ProjectDetail = () =>{
+    var t = [];
+  const db = getDatabase();
+  const reference = ref(db, "users/");
+  onValue(reference, (snapshot) => {
+    snapshot.forEach(function (childSnapshot){
+      const ProjectData = childSnapshot.val();
+      t.push(ProjectData);
+      console.log(t);
         
-          screenOptions={{
-            //header background color
-            headerStyle: { backgroundColor: "#73B9EE" },
-            //header text color
-            headerTintColor: "white",
-            drawerActiveBackgroundColor: "#86CEFA",
-            drawerActiveTintColor: "#fff",
-            drawerStyle: { backgroundColor: "#cccc" },
-          }}
-      >
-      <Drawer.Screen
-          name='Admin Home'
-          component={WelcomeScreen}
-          options={{
-            headerRight: () => (
-              <Button
-                onPress={() => logout()}
-                title="Logout"
-                color="#fff"
-              />
-            ),
-            drawerLabel: "Admin Home",
-            drawerIcon: ({ color, size }) => (
-              <AntDesign name="home" color={color} size={size} />
-              
-
-            ),
-          }}
-    />
-
-      <Drawer.Screen
-            name="Add Project"
-            component={AddProject}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <AntDesign name="filetext1" color={color} size={size} />
-               
-              ),
-            }}
-      />
-
-      <Drawer.Screen
-            name="Add Task"
-            component={AddSubTask}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <AntDesign name="addfile" color={color} size={size} />
-               
-              ),
-            }}
-      />
-
-      <Drawer.Screen
-            name="Project Status"
-            component={CompleteProject}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                <AntDesign name="addfile" color={color} size={size} />
-               
-              ),
-            }}
-      />
-
-
-
-    </Drawer.Navigator>
-
-     
-      
-      ):( 
-        
-        // user section start here.....
-        // is not then only show one screen 
-        <Drawer.Navigator
+    });
+    setData(t);
+    setAllProducts(t);
     
-        screenOptions={{
-          //header background color
-          headerStyle: { backgroundColor: "#73B9EE" },
-          //header text color
-          headerTintColor: "white",
-          drawerActiveBackgroundColor: "#86CEFA",
-          drawerActiveTintColor: "#fff",
-          drawerStyle: { backgroundColor: "#cccc" },
-        }}
-            
-        >
-
-      <Drawer.Screen
-            name="User Home"
-            component={UserHome}
-            options={{
-              drawerIcon: ({ color, size }) => (
-                
-                <AntDesign name="profile" color={color} size={size} />
-              ),
-              headerRight: () => (
-                <Button
-                  onPress={() => logout()}
-                  title="Logout"
-                  color="#fff"
-                />
-              ),
-            }}
-      />
-
-
-
-
-    </Drawer.Navigator>
-
-
-      
-      
-     
-      )}
-      
-      
-
     
- 
-    </>
-);
-
+    
+})
 }
+
+
+
+  
+  const itemSeparator = () => {
+    return <View style = {styles.separator} />
+   }
+  
+  return (
+    <SafeAreaView>
+
+    <View>
+
+    <View style={{ alignItems: 'center', justifyContent: 'center' , marginTop:10 }}>
+        <Text> Search here</Text>
+
+    </View>     
+
+    <FlatList
+              data = {data}
+              ItemSeparatorComponent = { itemSeparator }
+
+              renderItem = { ( {item , index} ) => (
+              
+                  <TouchableOpacity onPress= {()=>navigation.navigate("Chat" , {email:JSON.stringify(item.email), userId:JSON.stringify(item.userId) })} >
+
+                  <View style={styles.item}>
+                          
+                          <Text style={styles.itemname}>{item.email}</Text>
+                         
+                  </View>
+                  
+                  </TouchableOpacity>
+              )}
+                
+              />
+
+
+    </View>
+
+          
+
+            
+              
+
+            
+  
+         
+ 
+</SafeAreaView>
+
+);
+}
+
+
+// style part start herer //
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  separator:{
+    height: 1,
+    width: '100%',
+    backgroundColor: '#CCC',
+
+  },
+  item: {
+    flex: 1,
+    flexDirection:'row',
+    alignItems: 'center',
+    paddingVertical: 13,
+  },
+  avatarContainer:{
+    backgroundColor: '#D9D9D9',
+    borderRadius: 100,
+    height:59,
+    width:59,
+    justifyContent:'center',
+    alignItems:'center',
+    marginLeft:20,
+  },
+  avatar:{
+    height: 55,
+    width: 55,
+  },
+  itemname:{
+    fontWeight:'600',
+    fontSize:16,
+    marginLeft:13,
+},
+
+  deletebox:{
+      backgroundColor:'red',
+      justifyContent:'center',
+      alignItems:"center",
+      width:100,
+      height:120,
+      
+  },
+
+  delete:{
+    fontSize:20,
+    paddingBottom:25,
+  },
+
+  input:{height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+  },
+
+  item1: {
+    backgroundColor:'#ADD8E6',
+    borderRadius:'5',
+    margin:10,
+  },
+
+  i: {
+    
+    width:'100%',
+    height:20,
+    textAlign:'center',
+    marginTop:10,
+    fontSize:18,
+    
+  },
+
+  imagestyle:{
+    width:50,
+    height:50,
+    borderRadius: 100,
+  },
+  textBoxes: {
+    width: 350, 
+    fontSize: 18,
+    padding: 12,
+    borderColor: 'gray', 
+    borderWidth: 0.5,
+    borderRadius: 10,
+    marginBottom:10,
+  },
+
+});

@@ -2,10 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login from './screens/Login';
 import Home from './screens/Home';
-import SubTaskDetails from './Component/SubTaskDetails';
-import UpdateTask from './Component/UpdateTask';
 import { LogBox } from 'react-native';
-
+import Chat from './screens/Chat';
 const Stack = createStackNavigator();
 
 export default function MyStack() {
@@ -24,34 +22,10 @@ export default function MyStack() {
           <Stack.Screen name="Login" component={Login} />
           
           <Stack.Screen name="Home" component={Home} />
-          <Stack.Screen name="SubTaskDetails" component={SubTaskDetails}
-                        
-                        options={{
-                          headerShown: true,
-                          title: 'Task List',
-                          headerStyle: {
-                            backgroundColor: '#73B9EE',
-                          },
-                          headerTintColor: '#fff',
-                          headerTitleStyle: {
-                            fontWeight: 'bold',
-                          },
-                        }}
-          />
-          <Stack.Screen name="UpdateTask" component={UpdateTask}
-                        
-                        options={{
-                          headerShown: true,
-                          title: 'Task Details',
-                          headerStyle: {
-                            backgroundColor: '#73B9EE',
-                          },
-                          headerTintColor: '#fff',
-                          headerTitleStyle: {
-                            fontWeight: 'bold',
-                          },
-                        }}
-          />
+
+          <Stack.Screen name="Chat" component={Chat} />
+          
+          
           
         </Stack.Navigator>
     </NavigationContainer>
